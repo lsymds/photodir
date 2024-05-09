@@ -2,10 +2,10 @@ package photodir
 
 import "image"
 
-// Directory represents a file-system directory that contains photos. A tree of directories will be created for any
+// ImageDirectory represents a file-system directory that contains photos. A tree of directories will be created for any
 // nested directories that exist on the filesystem.
-type Directory struct {
-	Directories []Directory
+type ImageDirectory struct {
+	Directories []ImageDirectory
 	ImageFiles  []ImageFile
 	Path        string
 	Name        string
@@ -17,11 +17,11 @@ type ImageFile struct {
 	Name      string
 	Height    int
 	Width     int
-	Thumbnail Thumbnail
+	Thumbnail ImageThumbnail
 }
 
-// Thumbnail contains smaller representations of images.
-type Thumbnail struct {
+// ImageThumbnail contains smaller representations of images.
+type ImageThumbnail struct {
 	Height int
 	Width  int
 	Image  *image.NRGBA

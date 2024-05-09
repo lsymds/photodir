@@ -3,6 +3,7 @@ module github.com/lsymds/photodir
 go 1.22.1
 
 require (
+	github.com/a-h/templ v0.2.680
 	github.com/disintegration/imaging v1.6.2
 	github.com/rs/zerolog v1.32.0
 )

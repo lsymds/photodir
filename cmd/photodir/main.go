@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 	"path/filepath"
 
 	"github.com/rs/zerolog/log"
@@ -16,7 +16,10 @@ func main() {
 		return
 	}
 
+	// crawl the filesystem before booting the server
 	d := photodir.CrawlFilesystem(path)
 
-	fmt.Printf("%v", d.Directories)
+	// create the HTTP server
+	h := photodir.NewWebServer(d)
+	http.ListenAndServe("127.0.0.1:8994", h)
 }

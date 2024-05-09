@@ -17,8 +17,8 @@ import (
 )
 
 // CrawlFilesystem traverses the filesystem under the given path identifying any images that should be shown.
-func CrawlFilesystem(path string) *Directory {
-	root := &Directory{
+func CrawlFilesystem(path string) *ImageDirectory {
+	root := &ImageDirectory{
 		Path: path,
 		Name: path,
 	}
@@ -38,7 +38,7 @@ func CrawlFilesystem(path string) *Directory {
 
 // crawlDirectory recursively iterates over a given directory finding child directories (which are also recursively
 // iterated through) and image files
-func crawlDirectory(path string, parent *Directory) {
+func crawlDirectory(path string, parent *ImageDirectory) {
 	log.Debug().Str("path", path).Msg("crawling directory")
 
 	dirEntries, err := os.ReadDir(path)
@@ -52,7 +52,7 @@ func crawlDirectory(path string, parent *Directory) {
 
 		// if the entry is a directory, then recursively crawl it and its children
 		if e.IsDir() {
-			d := &Directory{
+			d := &ImageDirectory{
 				Name: e.Name(),
 				Path: entryPath,
 			}
@@ -100,7 +100,7 @@ func crawlDirectory(path string, parent *Directory) {
 }
 
 // dirHasImages identifies whether there are any images present in the directory tree
-func dirHasImages(d *Directory) bool {
+func dirHasImages(d *ImageDirectory) bool {
 	if len(d.ImageFiles) > 0 {
 		return true
 	}
@@ -115,7 +115,7 @@ func dirHasImages(d *Directory) bool {
 }
 
 // generateThumbnails concurrently generates thumbnail images for all image files in the directory tree
-func generateThumbnails(d *Directory, wg *sync.WaitGroup) {
+func generateThumbnails(d *ImageDirectory, wg *sync.WaitGroup) {
 	// dispatch child goroutines to generate thumbnails for all directories
 	for _, cd := range d.Directories {
 		generateThumbnails(&cd, wg)
@@ -150,7 +150,7 @@ func generateThumbnail(f *ImageFile, wg *sync.WaitGroup) {
 
 	rimg := imaging.Resize(img, 360, 0, imaging.Lanczos)
 
-	f.Thumbnail = Thumbnail{
+	f.Thumbnail = ImageThumbnail{
 		Width:  rimg.Bounds().Dx(),
 		Height: rimg.Bounds().Dy(),
 		Image:  rimg,
