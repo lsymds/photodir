@@ -121,7 +121,7 @@ func generateThumbnails(d *ImageDirectory, wg *sync.WaitGroup) {
 		generateThumbnails(&cd, wg)
 	}
 
-	// generate the actual thumbnails in coroutines too
+	// generate the actual thumbnails in coroutines
 	for _, f := range d.ImageFiles {
 		wg.Add(1)
 		go generateThumbnail(&f, wg)
