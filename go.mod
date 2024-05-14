@@ -5,7 +5,7 @@ go 1.22.1
 require (
 	github.com/a-h/templ v0.2.680
 	github.com/disintegration/imaging v1.6.2
-	github.com/lsymds/go-utils/pkg/http/middleware v0.0.0-20240509205758-f37d9b4ac11a
+	github.com/lsymds/go-utils/pkg/http/middleware v0.0.0-20240514204121-e7dcd0749a50
 	github.com/rs/zerolog v1.32.0
 )
 

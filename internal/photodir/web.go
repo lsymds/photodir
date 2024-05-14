@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/lsymds/go-utils/pkg/http/middleware"
-	"github.com/rs/zerolog"
 )
 
 // server is a wrapper around the HTTP server
@@ -30,7 +29,7 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	middleware.Recovery(
 		middleware.Logging(
 			s.router,
-			func(c *zerolog.Context) {},
+			middleware.EmptyLoggingEnricher,
 		),
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/oops", http.StatusSeeOther)
